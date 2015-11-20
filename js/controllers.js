@@ -1,7 +1,13 @@
 angular.module('app.controllers', [])
+    
+    .config(function($httpProvider) {
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    })
+
 
     .controller('siteController',function($scope, $ionicModal, $timeout, $http, $stateParams) {
-        $scope.urlBase = "http://192.168.1.112/sword/";
+        $scope.urlBase = "http://localhost/sword/";
         $scope.isLogedState = false;
         
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -235,6 +241,8 @@ angular.module('app.controllers', [])
         };
         ////////////////////// END LOGIN ////////////
 
+
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////// REGISTER ///////////////////////
         $scope.registerData = {};
@@ -273,7 +281,6 @@ angular.module('app.controllers', [])
         }
 
         $scope.forgetPassword = function(){
-
             if( $scope.loginData.username != null){
                 $http.post($scope.urlBase+"site/forgetPassword",  $scope.loginData.username   ).then(
                     function(response){ 
